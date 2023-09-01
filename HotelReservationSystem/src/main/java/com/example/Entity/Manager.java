@@ -1,7 +1,9 @@
 package com.example.Entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,8 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -41,10 +47,12 @@ public class Manager {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Mid;
 	
-	@NotBlank(message = "Name is required")
+	@NotEmpty(message = "ManagerName  cannot be empty")
+	@Size(min = 3,max = 20,message = "ManagerName should be Minimum 3 character and Maximum 20 charater long")
 	private String name;
 	
-	@Positive(message = "Contact number must be positive")
+	@Min(value = 1000000000L, message = "Contact number must be at least 10 digits")
+    @Max(value = 9999999999L, message = "Contact number can't be more than 10 digits")
 	private long contactNo;
 	
 	@OneToOne(cascade = CascadeType.ALL,mappedBy = "manager")
@@ -53,7 +61,7 @@ public class Manager {
 	private Hotel hotel;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Role> roles = new ArrayList<>();
+	private Set<Role> roles = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("hotel")

@@ -1,6 +1,9 @@
 package com.example.Service.Impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.Entity.Role;
 import com.example.Entity.User;
+import com.example.Repository.RoleRepository;
 import com.example.Repository.UserRepository;
 
 @Service
@@ -16,6 +21,9 @@ public class MyUserDetailService implements UserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	RoleRepository roleRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,6 +36,15 @@ public class MyUserDetailService implements UserDetailsService {
 	}
 	
 	public User addUser(User u) {
+		
+		Role role = new Role();
+		role.setRname("user");
+		Set<Role> st = new HashSet<>();
+		st.add(role);
+		if(u.getRoles() == null) {
+			u.setRoles(st);
+		}
+		
 		return userRepository.save(u);
 	}
 	

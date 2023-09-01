@@ -31,7 +31,7 @@ public class HotelDTO {
     private String Overview;
     private String BookingType;
     private int NoOfRooms;
-    private List<Review> reviews;
+    private List<ReviewDTOforHotel> reviews;
     private int overallRating;
     private String about;
     @JsonIgnoreProperties("hotel")

@@ -1,8 +1,10 @@
 package com.example.Service.Impl;
 
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -10,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Entity.Hotel;
+import com.example.Entity.Role;
 import com.example.Entity.DTO.HdtoForHotel;
 import com.example.Entity.DTO.HotelDTO;
 import com.example.Repository.HotelRepository;
 import com.example.Repository.ManagerRepository;
+import com.example.Repository.RoleRepository;
 import com.example.Service.HotelService;
 
 @Service
@@ -27,6 +31,9 @@ public class HotelServiceImp implements HotelService{
 	
 	@Autowired
 	ModelMapper modelMapper;
+	
+	@Autowired
+	RoleRepository roleRepository;
 
 	
 	// Get list of all hotels 
@@ -56,6 +63,21 @@ public class HotelServiceImp implements HotelService{
 	@Override
 	public HotelDTO addNewHotel(Hotel h) {
 		// TODO Auto-generated method stub
+		Role role = new Role();
+		Role role2 = new Role();
+		role.setRname("user");
+		role2.setRname("manager");
+		
+		Set<Role> st = new HashSet<>();
+		st.add(role);
+		st.add(role2);
+		if(h.getManager().getRoles().isEmpty()) {
+			h.getManager().setRoles(st);
+			System.out.println("manager roles "+ h.getManager().getRoles());
+			Hotel savedHotel =  hotelRepository.save(h);
+			return modelMapper.map(savedHotel, HotelDTO.class);
+		}
+		
 		Hotel savedHotel =  hotelRepository.save(h);
 		return modelMapper.map(savedHotel, HotelDTO.class);
 	}

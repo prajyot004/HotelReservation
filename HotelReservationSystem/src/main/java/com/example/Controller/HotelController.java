@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +46,17 @@ public class HotelController {
 	@PostMapping("/hotel")
 	public ResponseEntity<Object> addHotel(@RequestBody @Valid  Hotel h) {
 		return new ResponseEntity<>(hotelServiceImp.addNewHotel(h),HttpStatus.CREATED);
+		
+//		BindingResult hotelBindingResult = validateHotel(h);
+//
+//        // If there are validation errors in the Hotel entity or Manager entity, return them
+//        if (hotelBindingResult.hasErrors()) {
+//            return ResponseEntity.badRequest().body(hotelBindingResult.getAllErrors());
+//        }
+//
+//        // Continue with saving the hotel
+//        hotelServiceImp.addNewHotel(h);
+//        return ResponseEntity.ok("Hotel created successfully");
 	}
 	
 	@PutMapping("/hotel/update/{id}")
@@ -75,6 +88,11 @@ public class HotelController {
 	public List<HdtoForHotel> getBybookingType(@PathVariable String type){
 		return hotelServiceImp.findHotelByBookingType(type);
 	}
+	
+	private BindingResult validateHotel(@Valid Hotel hotel) {
+        // Perform validation for the Hotel entity
+        return new BeanPropertyBindingResult(hotel, "hotel");
+    }
 	
 	
 	

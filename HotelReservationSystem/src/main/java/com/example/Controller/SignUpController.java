@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,15 +28,13 @@ public class SignUpController {
 	MyUserDetailService myUserDetailService;
 	
 	@PostMapping("/users")
-	public User adduser( @RequestBody User user) {
+	public ResponseEntity<Object> adduser( @RequestBody @Valid User user) {
 		String password = user.getPassword();
 		String encodedPassword = bCryptPasswordEncoder.encode(password);
 		user.setPassword(encodedPassword);
-		return myUserDetailService.addUser(user);
+//		return myUserDetailService.addUser(user);
+		return new ResponseEntity<>(myUserDetailService.addUser(user),HttpStatus.CREATED);
 	}
-	
-	
-	
 	
 	@GetMapping("/users/{id}")
 	public User getUser(@PathVariable int id) {

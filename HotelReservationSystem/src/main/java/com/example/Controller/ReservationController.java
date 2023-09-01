@@ -29,5 +29,12 @@ public class ReservationController {
 	public List<ReservationDTO> getallReservation(){
 		return reservationServiceImpl.getallReservations();
 	}
+	
+	@GetMapping("/reservation/{uid}")
+	public List<ReservationDTO> getReservationByUid(@PathVariable int uid){
+		return reservationServiceImpl.getReservationByUserid(uid);
+	}
+	
+	
 
 }

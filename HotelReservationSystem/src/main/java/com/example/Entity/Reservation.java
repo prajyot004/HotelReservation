@@ -71,7 +71,7 @@ public class Reservation {
     private String checkInDate;
 
     @Min(value = 1, message = "Number of days to stay should be at least 1")
-    private int NoOfDaysToStay;
+    private int noOfDaysToStay;
 
     @NotBlank(message = "Check-out date is required")
     private String checkOutDate;
@@ -84,7 +84,7 @@ public class Reservation {
     @Min(value = 1, message = "Guest count should be at least 1")
     private int guestCount;
 
-    @NotBlank(message = "Confirmation code is required")
+//    @NotBlank(message = "Confirmation code is required")
     private String confirmationCode;
 	
 	

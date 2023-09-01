@@ -112,6 +112,23 @@ public class ReservationServiceImpl implements ReservationService{
 		
 		return "Reservation deleted";
 	}
+
+	
+	@Override
+	public List<ReservationDTO> getReservationByUserid(int uid) {
+		// TODO Auto-generated method stub
+		List<Reservation> lst = reservationRepository.findAll();
+		
+		List<Reservation> forThisUser = new ArrayList<>();
+		
+		for(Reservation r: lst) {
+			if(r.getUser().getUserId() == uid) {
+				forThisUser.add(r);
+			}
+		}
+		
+		return forThisUser.stream().map(res -> modelMapper.map(res, ReservationDTO.class)).collect(Collectors.toList());
+	}
 	
 	
 

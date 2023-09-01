@@ -12,4 +12,5 @@ public interface ReservationService {
 	public ReservationDTO getReservationById(int id);
 	public List<ReservationDTO> getallReservations();
 	public String deleteReservation(int id);
+	public List<ReservationDTO> getReservationByUserid(int uid);
 }

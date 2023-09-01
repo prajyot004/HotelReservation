@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Entity.Manager;
 import com.example.Entity.DTO.ManagerDTO;
+import com.example.Entity.DTO.ReservationForManagerDTO;
 import com.example.Service.Impl.ManagerServiceImpl;
 
 @RestController
@@ -57,5 +59,16 @@ public class ManagerController {
 	public List<ManagerDTO> findbyname(@PathVariable String name) {
 		return managerServiceImpl.findManagerByName(name);
 	}
+	
+	@GetMapping("/managers/notConfirmed/{mid}")
+	public List<ReservationForManagerDTO> getnotconfirmedRes(@PathVariable int mid){
+		return managerServiceImpl.NotConfirmedReservation(mid);
+	}
+	
+	@PatchMapping("/managers/confirmReservation/{rid}/{mid}")
+	public ReservationForManagerDTO confirmReservation(@PathVariable int rid,@PathVariable int mid) {
+		return managerServiceImpl.confirmReservation(rid, mid);
+	}
+	
 
 }

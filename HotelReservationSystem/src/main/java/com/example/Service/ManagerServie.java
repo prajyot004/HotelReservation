@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.Entity.Manager;
 import com.example.Entity.DTO.ManagerDTO;
+import com.example.Entity.DTO.ReservationForManagerDTO;
 
 public interface ManagerServie {
 	public List<Manager> getAllManager();
@@ -14,4 +15,6 @@ public interface ManagerServie {
 	public String deleteManagerById(int id);
 	public Manager addNewManager(Manager m);
 	public ManagerDTO updateManager(Manager m);
+	public List<ReservationForManagerDTO> NotConfirmedReservation(int mid);
+	public ReservationForManagerDTO confirmReservation(int rid,int mid);
 }
